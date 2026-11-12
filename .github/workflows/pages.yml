@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+on:
+  schedule:
+    # 18:17 UTC = 03:17 JST on the following day.
+    - cron: '17 18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Prepare site files
+        run: |
+          if [ ! -s public/index.html ]; then
+            echo "::error file=public/index.html::Add the browser game's entry page before deploying."
+            exit 1
+          fi
+          mkdir -p _site/simulator
+          cp -a public/. _site/
+          cp slot-engine.mjs _site/
+          cp simulator/config.json _site/simulator/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/deploy-pages@v4
+        id: deployment
