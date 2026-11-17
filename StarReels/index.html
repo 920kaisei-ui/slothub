@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Star Reels | SlotHub</title>
+  <link rel="stylesheet" href="../shared/reels.css">
+  <script type="module" src="./game.mjs"></script>
+</head>
+<body>
+  <main>
+    <a href="../">← SlotHubに戻る</a>
+    <h1>Star Reels</h1>
+    <p>12回転で星座を集めます。出た図柄から1種類を図鑑に登録できます。</p>
+    <p class="balance">クレジット <strong id="credits">100</strong> · 残り <strong id="remaining">12</strong>回転</p>
+    <div class="reels" aria-label="図鑑に登録する図柄を選択">
+      <button type="button" class="reel" disabled>—</button>
+      <button type="button" class="reel" disabled>—</button>
+      <button type="button" class="reel" disabled>—</button>
+    </div>
+    <div class="actions">
+      <button type="button" id="spin" class="primary">回す</button>
+      <button type="button" id="skip" disabled>登録せずに進む</button>
+      <button type="button" id="reset">最初から</button>
+    </div>
+    <p class="status" id="status" role="status">回すボタンで開始します。</p>
+    <h2>図鑑</h2>
+    <p id="album">登録なし</p>
+    <ul id="constellations"></ul>
+    <details>
+      <summary>ルールと配当</summary>
+      <p>回転には1クレジットがかかります。星座が完成したときもクレジットを受け取れます。</p>
+      <p id="payout-table"></p>
+    </details>
+  </main>
+</body>
+</html>

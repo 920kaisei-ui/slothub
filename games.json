@@ -1,0 +1,36 @@
+{
+  "sharedFiles": ["shared/reels.mjs", "shared/reels.css"],
+  "games": [
+    {
+      "title": "GemCrash",
+      "directory": "GemCrash",
+      "description": "宝石を落として連鎖。ワイルドを足がかりに、6×7の盤面で連鎖を伸ばす。",
+      "files": [
+        "style.css", "game.mjs", "session.mjs", "slot-engine.mjs", "reel-motion.mjs", "audio.mjs", "simulator/presets/6x7.json",
+        "assets/art/ruby.png", "assets/art/rainbow-orb.png", "assets/art/topaz.png", "assets/art/emerald.png",
+        "assets/art/sapphire.png", "assets/art/diamond.png", "assets/art/wild.png",
+        "assets/art/frame.png", "assets/art/cabinet.png",
+        "assets/audio/spin.wav", "assets/audio/stop.wav", "assets/audio/match.wav",
+        "assets/audio/land.wav", "assets/audio/orb.wav", "assets/audio/win.wav"
+      ]
+    },
+    {
+      "title": "Vault Reels",
+      "directory": "VaultReels",
+      "description": "図柄を保留し、残りのリールを1回だけ引き直す。",
+      "files": ["game.mjs"]
+    },
+    {
+      "title": "Route Reels",
+      "directory": "RouteReels",
+      "description": "同じ図柄を左から右へつなぎ、払い出しルートを選ぶ。",
+      "files": ["game.mjs"]
+    },
+    {
+      "title": "Star Reels",
+      "directory": "StarReels",
+      "description": "12回転で図柄を集め、星座図鑑の完成を目指す。",
+      "files": ["game.mjs"]
+    }
+  ]
+}

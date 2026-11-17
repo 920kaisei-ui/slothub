@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vault Reels | SlotHub</title>
+  <link rel="stylesheet" href="../shared/reels.css">
+  <script type="module" src="./game.mjs"></script>
+</head>
+<body>
+  <main>
+    <a href="../">← SlotHubに戻る</a>
+    <h1>Vault Reels</h1>
+    <p>残したい図柄を保留して、残りを1回だけ引き直せます。</p>
+    <p class="balance">クレジット <strong id="credits">100</strong> · 1回転 1クレジット</p>
+    <div class="reels" aria-label="リール">
+      <button type="button" class="reel" aria-pressed="false" disabled>—</button>
+      <button type="button" class="reel" aria-pressed="false" disabled>—</button>
+      <button type="button" class="reel" aria-pressed="false" disabled>—</button>
+    </div>
+    <div class="actions">
+      <button type="button" id="spin" class="primary">回す</button>
+      <button type="button" id="reroll" disabled>引き直す</button>
+      <button type="button" id="collect" disabled>この出目で確定</button>
+      <button type="button" id="reset">最初から</button>
+    </div>
+    <p class="status" id="status" role="status">回すボタンで開始します。</p>
+    <details>
+      <summary>ルールと配当</summary>
+      <p id="payout-table"></p>
+      <p>引き直しに追加クレジットはかかりません。</p>
+    </details>
+  </main>
+</body>
+</html>

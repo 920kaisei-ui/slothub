@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GemCrash | SlotHub</title>
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./game.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <a class="hub-return" href="../">← SlotHubに戻る</a>
+      <section class="cabinet" aria-labelledby="gemcrash-title">
+      <header>
+        <h1 id="gemcrash-title">GemCrash</h1>
+      </header>
+      <dl class="stats">
+        <div><dt>クレジット</dt><dd id="balance">—</dd></div>
+        <div><dt>セッション収支</dt><dd id="profit">—</dd></div>
+      </dl>
+      <dl class="stats round-stats" aria-label="今回の内訳">
+        <div><dt>今回のベット</dt><dd id="round-stake">—</dd></div>
+        <div><dt>払い出し</dt><dd id="payout">—</dd></div>
+        <div><dt>今回の差引</dt><dd id="round-net">—</dd></div>
+      </dl>
+      <p id="phase" class="phase">設定を読み込み中</p>
+      <div id="reel-window" class="reel-window">
+        <div id="board" role="group" aria-label="宝石の盤面"></div>
+        <div id="reel-overlay" class="reel-overlay" aria-hidden="true"></div>
+      </div>
+      <p id="matches" class="matches"></p>
+      <p id="milestone" class="milestone"></p>
+      <div class="actions">
+        <label for="bet">ベット</label>
+        <select id="bet" disabled></select>
+        <button id="spin" type="button" disabled>回す</button>
+        <button id="skip" type="button" class="secondary" disabled>結果へ</button>
+        <button id="reset" type="button" class="secondary" disabled>最初から</button>
+      </div>
+      <div class="preferences">
+        <label for="pace">演出</label>
+        <select id="pace">
+          <option value="normal">通常</option>
+          <option value="quick">短縮</option>
+          <option value="instant">結果のみ</option>
+        </select>
+        <label class="sound-option"><input id="sound" type="checkbox"> 効果音</label>
+        <label class="sound-option" for="volume">音量</label>
+        <input id="volume" type="range" min="0" max="100" value="42" disabled>
+      </div>
+      <p id="result" role="status" aria-atomic="true">設定を読み込み中</p>
+      </section>
+      <details>
+        <summary>10回転チャレンジ</summary>
+        <p>現在のベット額で10回転を記録します。</p>
+        <button id="challenge" type="button" class="secondary" disabled>記録を始める</button>
+        <p id="challenge-summary" role="status">記録なし</p>
+      </details>
+      <details>
+        <summary>今回の配当内訳</summary>
+        <p id="receipt-note">最初の回転が終わると表示します。</p>
+        <ol id="receipt"></ol>
+      </details>
+      <details>
+        <summary>遊び方と配当</summary>
+        <p id="match-rule"></p>
+        <p>成立した宝石は消え、上から補充されます。ワイルド（✦）はその場に残ります。第n連鎖の配当は、成立したかたまりの基本配当の合計 × ベット額 × n です。</p>
+        <ul id="paytable"></ul>
+        <button id="practice" type="button" class="secondary" disabled>見本盤面を開く</button>
+        <p>クレジットはゲーム内の点数です。「最初から」で所持クレジットと収支をリセットできます。</p>
+      </details>
+      <dialog id="practice-dialog" aria-labelledby="practice-title">
+        <h2 id="practice-title"></h2>
+        <p id="practice-description"></p>
+        <div id="practice-board" class="gem-grid" role="group" aria-label="見本盤面"></div>
+        <p id="practice-result" role="status"></p>
+        <div class="actions">
+          <button id="practice-reveal" type="button">成立を見る</button>
+          <button id="practice-next" type="button" class="secondary">次の見本</button>
+          <form method="dialog"><button class="secondary">閉じる</button></form>
+        </div>
+      </dialog>
+    </main>
+  </body>
+</html>

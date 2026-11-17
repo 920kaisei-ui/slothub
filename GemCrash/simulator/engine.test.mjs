@@ -32,7 +32,15 @@ test('L字の5個を1回だけ配当する', () => {
     A, C, B,
     A, A, A,
   );
-  assert.equal(engine.step(board, 1), 1n);
+  const expected = [0, 3, 6, 7, 8];
+  let observed = false;
+  assert.equal(engine.step(board, 1, (mask, groups) => {
+    observed = true;
+    assert.equal(groups.length, 1);
+    assert.deepEqual([...groups[0].cells].sort((a, b) => a - b), expected);
+    assert.deepEqual([...mask.keys()].filter(index => mask[index]), expected);
+  }), 1n);
+  assert.ok(observed);
   assert.equal(board.filter(gem => gem === A).length, 0);
 });
 
@@ -44,6 +52,7 @@ test('斜めだけの5個とワイルドだけの連結は不成立', () => {
     return row === column ? A : (row + column) % 2 ? B : C;
   });
   assert.deepEqual(diagonal.resolveBoard(board), { payoutUnits: 0n, chains: 0 });
+  assert.equal(diagonal.step(board, 1, () => assert.fail('不成立の図柄を通知した')), null);
   assert.equal(diagonal.step(new Int32Array(25).fill(WILD), 1), null);
 });
 
@@ -54,7 +63,13 @@ test('複数色が同じワイルドを使い、それぞれ配当される', ()
     A, A, WILD, B, B,
     C, C, D, C, C,
   );
-  assert.equal(engine.step(board, 1), 3n);
+  assert.equal(engine.step(board, 1, (mask, groups, multiplier) => {
+    assert.deepEqual(groups.map(group => group.color), [A, B]);
+    assert.deepEqual(groups.map(group => group.cells.length), [5, 5]);
+    assert.ok(groups.every(group => group.cells.includes(7)));
+    assert.deepEqual(groups.map(group => group.amount * multiplier), [1n, 2n]);
+    assert.equal(mask[7], 0);
+  }), 3n);
   assert.equal(board[7], WILD);
   assert.equal(board.includes(A) || board.includes(B), false);
 });
@@ -87,6 +102,13 @@ test('ゼロ配当の消去も連鎖に数える', () => {
   const draws = [0.3, 0.6, 0.9];
   const engine = createSlotEngine(config, () => draws.shift());
   assert.deepEqual(engine.resolveBoard(Int32Array.of(A, A, A)), { payoutUnits: 0n, chains: 1 });
+});
+
+test('連鎖段階をそのまま倍率にし、5個以上の固定配当を適用する', () => {
+  const config = fixture(6, 1, 5, { chainMultipliers: 'linear' });
+  config.gems[A].payouts[0].amount = 100;
+  const engine = createSlotEngine(config, () => 0.9);
+  assert.equal(engine.step(Int32Array.of(A, A, A, WILD, A, A), 8), 800n * engine.betUnits);
 });
 
 test('初期配置と補充の重みを分け、指定個数のワイルドを置く', () => {

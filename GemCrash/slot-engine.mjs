@@ -114,7 +114,8 @@ export function createSlotEngine(config, random = Math.random) {
     }
     return tiers;
   });
-  const multipliers = entries(config.chainMultipliers, 'chainMultipliers');
+  const linearMultiplier = config.chainMultipliers === 'linear';
+  const multipliers = linearMultiplier ? [] : entries(config.chainMultipliers, 'chainMultipliers');
   multipliers.forEach((value, index) => nonnegative(value, `chainMultipliers[${index}]`));
   const payoutPlaces = decimalScale(payoutTiers.flatMap(tiers => tiers.map(tier => tier.amount)));
   const multiplierPlaces = decimalScale(multipliers);
@@ -161,12 +162,13 @@ export function createSlotEngine(config, random = Math.random) {
     return board;
   }
 
-  // stage は1始まり。盤面を更新し、払い出し単位数か消去なしを示す null を返す。
-  function step(board, stage) {
+  // stage は1始まり。onClearには更新前の成立位置と配当内訳を渡す。
+  function step(board, stage, onClear) {
     cleared.fill(0);
     affectedColumns.fill(0);
     let basePayout = 0n;
     let hasClear = false;
+    const groups = onClear ? [] : null;
     for (const color of ids) {
       visited.fill(0);
       for (let cell = 0; cell < size; cell++) {
@@ -184,7 +186,9 @@ export function createSlotEngine(config, random = Math.random) {
         }
         if (count < minimumClusterSize) continue;
         hasClear = true;
-        basePayout += payoutBySize[color][count];
+        const amount = payoutBySize[color][count];
+        basePayout += amount;
+        if (groups) groups.push({ color, cells: queue.slice(0, count), amount });
         for (let index = 0; index < count; index++) {
           const matched = queue[index];
           if (board[matched] === WILD) continue;
@@ -195,6 +199,8 @@ export function createSlotEngine(config, random = Math.random) {
     }
     if (!hasClear) return null;
     if (stage >= maxChains) throw new ChainLimitError(stage);
+    const multiplier = linearMultiplier ? BigInt(stage) : multiplierUnits[Math.min(stage, multiplierUnits.length) - 1];
+    onClear?.(cleared.slice(), groups, multiplier);
 
     for (let column = 0; column < width; column++) {
       if (!affectedColumns[column]) continue;
@@ -209,7 +215,7 @@ export function createSlotEngine(config, random = Math.random) {
         if (board[write] !== WILD) board[write] = pickRefill(random);
       }
     }
-    return basePayout * multiplierUnits[Math.min(stage, multiplierUnits.length) - 1];
+    return basePayout * multiplier;
   }
 
   function resolveBoard(board) {

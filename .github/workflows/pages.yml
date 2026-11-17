@@ -20,16 +20,11 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - name: Prepare site files
-        run: |
-          if [ ! -s public/index.html ]; then
-            echo "::error file=public/index.html::Add the browser game's entry page before deploying."
-            exit 1
-          fi
-          mkdir -p _site/simulator
-          cp -a public/. _site/
-          cp slot-engine.mjs _site/
-          cp simulator/config.json _site/simulator/
+        run: node scripts/build-site.mjs
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site

@@ -1,0 +1,82 @@
+:root {
+  color-scheme: dark;
+  font-family: "Geist", system-ui, sans-serif;
+  color: #f2effa;
+  background: #14121d;
+  --accent: #d3b3ff;
+  --panel: #211b30;
+  --panel-hover: #2a2140;
+  --border: #534866;
+  --muted: #c1b6d1;
+}
+
+.hub {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 8vw, 5rem) 1.25rem;
+}
+
+header {
+  margin-bottom: clamp(2rem, 6vw, 3rem);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.75rem, 9vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  font-size: 1.1rem;
+}
+
+header p, #catalog-status {
+  color: var(--muted);
+}
+
+.game-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 0.85rem;
+  padding: 0;
+  list-style: none;
+}
+
+.game-list a {
+  box-sizing: border-box;
+  display: grid;
+  align-content: start;
+  min-height: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--panel);
+  color: inherit;
+  text-decoration: none;
+}
+
+.game-list a:hover {
+  background: var(--panel-hover);
+}
+
+.game-list a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.game-list h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.game-list p {
+  margin: 0.45rem 0 1rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.game-list span {
+  color: var(--accent);
+  font-weight: 600;
+}

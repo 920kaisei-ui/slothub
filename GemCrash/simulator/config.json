@@ -1,0 +1,21 @@
+{
+  "width": 5,
+  "height": 6,
+  "minimumClusterSize": 5,
+  "gems": [
+    { "name": "Ruby", "initialWeight": 1, "refillWeight": 1, "payouts": [{ "count": 5, "amount": 0.23014 }] },
+    { "name": "Amber", "initialWeight": 1, "refillWeight": 1, "payouts": [{ "count": 5, "amount": 0.23014 }] },
+    { "name": "Topaz", "initialWeight": 1, "refillWeight": 1, "payouts": [{ "count": 5, "amount": 0.23014 }] },
+    { "name": "Emerald", "initialWeight": 1, "refillWeight": 1, "payouts": [{ "count": 5, "amount": 0.23014 }] },
+    { "name": "Sapphire", "initialWeight": 1, "refillWeight": 1, "payouts": [{ "count": 5, "amount": 0.69042 }] },
+    { "name": "Diamond", "initialWeight": 0.035, "refillWeight": 0.035, "payouts": [{ "count": 5, "amount": 100 }] }
+  ],
+  "wildCounts": [
+    { "count": 1, "weight": 88 },
+    { "count": 2, "weight": 12 }
+  ],
+  "chainMultipliers": "linear",
+  "maxChains": 100,
+  "trials": 100000,
+  "seed": 20261112
+}

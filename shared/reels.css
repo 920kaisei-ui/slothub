@@ -1,0 +1,98 @@
+:root {
+  color-scheme: dark;
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  color: #f5f2fa;
+  background: #151124;
+  --panel: #251d3b;
+  --accent: #d6c4ff;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 38rem;
+  margin: auto;
+  padding: 2rem 1.25rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+h1 {
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(2rem, 7vw, 3.5rem);
+}
+
+.reels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.reel {
+  display: grid;
+  place-items: center;
+  min-height: 3.75rem;
+  padding: 0.45rem;
+  border: 2px solid transparent;
+  border-radius: 0.6rem;
+  background: var(--panel);
+  color: inherit;
+  font: inherit;
+  font-size: clamp(1.7rem, 7vw, 2.5rem);
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #776993;
+  border-radius: 0.5rem;
+  color: inherit;
+  background: var(--panel);
+  font: inherit;
+  cursor: pointer;
+}
+
+button.primary {
+  color: #211637;
+  background: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.52;
+  cursor: default;
+}
+
+.reel[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: #3a2c59;
+  opacity: 1;
+}
+
+:focus-visible {
+  outline: 3px solid #ffe095;
+  outline-offset: 2px;
+}
+
+.actions,
+.choices {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.balance {
+  font-variant-numeric: tabular-nums;
+}
+
+.status {
+  min-height: 3em;
+}
+
+details {
+  margin-top: 1.25rem;
+}
